@@ -1,0 +1,35 @@
+meta {
+  name: 02 - Bulbasaur: dados e contratos
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://pokeapi.co/api/v2/pokemon/1
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  // EXERCICIO 2 - COMPLETE SOMENTE OS TESTES ABAIXO.
+  // Verifique: status 200; nome e id; altura e peso positivos.
+  test('Status HTTP 200', () => {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test('ID e nome correspondem a Bulbasaur', () => {
+    const body = res.getBody();
+    expect(body.id).to.equal(1);
+    expect(body.name).to.equal('bulbasaur');
+  });
+
+  test('Altura e peso sao numeros positivos', () => {
+    const body = res.getBody();
+    expect(body.height).to.be.a('number').and.to.be.above(0);
+    expect(body.weight).to.be.a('number').and.to.be.above(0);
+  });
+}

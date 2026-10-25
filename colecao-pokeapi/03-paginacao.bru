@@ -1,0 +1,48 @@
+meta {
+  name: 03 - Lista de Pokemon: paginacao
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://pokeapi.co/api/v2/pokemon?limit=5&offset=10
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  // EXERCICIO 3 - USE OS PARAMETROS limit=5 E offset=10.
+  // limit=5   -> quantos itens vem na pagina (no maximo 5).
+  // offset=10 -> quantos itens pular antes de comecar (pula os 10 primeiros,
+  //              entao a lista comeca no 11o Pokemon, o Metapod).
+  test('A consulta retorna 200', () => {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test('A lista contem exatamente cinco itens', () => {
+    const body = res.getBody();
+    expect(body.results).to.be.an('array').that.has.lengthOf(5);
+    // Cada item da lista tem nome e url do Pokemon.
+    expect(body.results[0]).to.have.property('name').that.is.a('string');
+    expect(body.results[0]).to.have.property('url').that.is.a('string');
+    // Como o offset pula 10 itens, o primeiro e o Pokemon numero 11.
+    expect(body.results[0].name).to.equal('metapod');
+  });
+
+  test('Existem metadados de paginacao', () => {
+    const body = res.getBody();
+    // count = total de Pokemon na API (numero maior que zero).
+    expect(body).to.have.property('count').that.is.a('number');
+    expect(body.count).to.be.above(0);
+    // next = link da proxima pagina; previous = link da pagina anterior.
+    // Como offset=10 nao e a primeira pagina, os dois existem e sao strings.
+    expect(body).to.have.property('next').that.is.a('string');
+    expect(body).to.have.property('previous').that.is.a('string');
+    expect(body.next).to.include('offset=15');
+    expect(body.previous).to.include('offset=5');
+  });
+}

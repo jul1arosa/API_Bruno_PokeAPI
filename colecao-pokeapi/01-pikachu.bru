@@ -1,0 +1,32 @@
+meta {
+  name: 01 - Pikachu: status, headers e JSON
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://pokeapi.co/api/v2/pokemon/pikachu
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  test('Status HTTP 200', () => {
+    expect(res.getStatus()).to.equal(200);
+  });
+  test('Content-Type informa JSON', () => {
+    expect(res.getHeader('content-type')).to.include('application/json');
+  });
+  test('Body identifica Pikachu pelo ID 25', () => {
+    expect(res.getBody().name).to.equal('pikachu');
+    expect(res.getBody().id).to.equal(25);
+  });
+  test('O tipo e as habilidades sao arrays', () => {
+    expect(res.getBody().types).to.be.an('array').that.is.not.empty;
+    expect(res.getBody().abilities).to.be.an('array').that.is.not.empty;
+  });
+}

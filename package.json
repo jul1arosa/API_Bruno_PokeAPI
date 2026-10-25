@@ -1,0 +1,16 @@
+{
+  "name": "atividade-api-bruno-pokeapi-base",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Projeto base semi preenchido para atividade de testes de API com Bruno CLI",
+  "scripts": {
+    "test": "cd colecao-pokeapi && bru run",
+    "test:exemplo": "cd colecao-pokeapi && bru run 01-pikachu.bru",
+    "test:report": "cd colecao-pokeapi && bru run --reporter-json ../relatorios/resultado.json",
+    "bruno:version": "bru --version",
+    "inspect": "node inspecionar-resposta.mjs"
+  },
+  "devDependencies": {
+    "@usebruno/cli": "^4.2.1"
+  }
+}

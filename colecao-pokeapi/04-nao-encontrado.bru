@@ -1,0 +1,26 @@
+meta {
+  name: 04 - Pokemon inexistente: resposta 404
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://pokeapi.co/api/v2/pokemon/pokemon-inexistente-xyz-987
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+tests {
+  // EXERCICIO 4 - UM 404 CORRETO NAO E UM TESTE FALHANDO.
+  test('Recurso nao encontrado retorna HTTP 404', () => {
+    expect(res.getStatus()).to.equal(404);
+  });
+
+  test('Nao retorna sucesso 200', () => {
+    expect(res.getStatus()).to.not.equal(200);
+  });
+}
